@@ -6,13 +6,11 @@ local timer		= require "timer"
 
 memory.enableCache()
 
--- TODO: this
 function master(port1)
 	if not port1 then
 		return print("Usage: port1")
 	end
 	local dev1 = device.config(port1)
-	--local dev2 = device.config(port2)
 	device.waitForLinks()
 	for size = 64, 1518 do
 		print("Running test for packet size = " .. size)
@@ -36,17 +34,12 @@ function loadSlave(queue1, size)
 	end)
 	bufs = mem:bufArray()
 	local ctr1 = stats:newDevTxCounter(queue1.dev, "plain")
-	--local ctr2 = stats:newDevTxCounter(queue2.dev, "plain")
 	local runtime = timer:new(10)
 	while runtime:running() and dpdk.running() do
 		bufs:alloc(size)
 		queue1:send(bufs)
 		ctr1:update()
-		--bufs:alloc(size)
-		--queue2:send(bufs)
-		--ctr2:update()
 	end
 	ctr1:finalize()
-	--ctr2:finalize()
-	return nil -- TODO
+	return nil
 end
