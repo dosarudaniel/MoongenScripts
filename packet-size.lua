@@ -1,6 +1,6 @@
 local dpdk		= require "dpdk"
-local memory	= require "memory"
-local device	= require "device"
+local memory		= require "memory"
+local device		= require "device"
 local stats		= require "stats"
 local timer		= require "timer"
 
